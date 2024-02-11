@@ -1,12 +1,13 @@
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from .views import dashboard, user_login
+from .views import dashboard, register, user_login
 
 
 urlpatterns = [
-    # path('login/', user_login, name='login'),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', user_login, name='login'),
+    # path('login/', auth_views.LoginView.as_view() , name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', include('django.contrib.auth.urls')),
     path('', dashboard, name='dashboard'),
@@ -19,6 +20,8 @@ urlpatterns = [
 #     path('password-reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 
 #     path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    path('register/', register, name='register'),
 
     
 ]
