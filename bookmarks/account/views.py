@@ -19,6 +19,8 @@ def user_login(request: HttpRequest):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    if not Profile.objects.filter(user=user).exists():
+                        Profile.objects.create(user=user)
                     return HttpResponse('Authenticated successfully')
                 else:
                     return HttpResponse('Disable account')
