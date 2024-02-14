@@ -46,9 +46,22 @@
             {% endfor %}
         </ul>
     {% endif %}
+
     <div id="content">
         {% block content %}{% endblock content %}
     </div>
+    
+
+    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', event => {
+            const csfrtoken = Cookies.get('csfrtoken')
+            console.log('csfrtoken', csfrtoken)
+            
+            {% block domready %}{% endblock domready %}
+        })
+    </script>
     
 </body>
 </html>
