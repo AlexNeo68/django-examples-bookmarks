@@ -50,14 +50,27 @@
     <div id="content">
         {% block content %}{% endblock content %}
     </div>
-    
 
-    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.5/js.cookie.min.js"></script>
+    
     <script>
-        
+
+        function getCookie() {
+            let cookie = {};
+            document.cookie.split(';').forEach(function(el) {
+              let [key,value] = el.split('=');
+              cookie[key.trim()] = value;
+            })
+            return cookie;
+        }
+
         document.addEventListener('DOMContentLoaded', event => {
-            const csfrtoken = Cookies.get('csfrtoken')
-            console.log('csfrtoken', csfrtoken)
+
+            {% comment %} const cookie = getCookie()
+            
+            const csrftoken = cookie['csrftoken'] {% endcomment %}
+
+            const csrftoken = Cookies.get('csrftoken');
             
             {% block domready %}{% endblock domready %}
         })

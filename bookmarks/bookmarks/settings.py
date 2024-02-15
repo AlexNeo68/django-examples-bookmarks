@@ -160,8 +160,8 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
-CSRF_USE_SESSIONS=True
-CSRF_COOKIE_HTTPONLY=True
+CSRF_USE_SESSIONS=False
+CSRF_COOKIE_HTTPONLY=False
 
 if DEBUG:
     import mimetypes

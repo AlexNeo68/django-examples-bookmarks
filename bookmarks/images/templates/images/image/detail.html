@@ -42,14 +42,12 @@
     const url = '{% url "images:like" %}';
     var options = {
         method: 'POST',
-        headers: {'X-CSRFToken': csrftoken},
+        headers: {'X-Csrftoken': csrftoken},
         mode: 'same-origin'
     }
 
     document.querySelector('a.like').addEventListener('click', function(e){
         e.preventDefault();
-        
-        console.log('it is like pressed');
 
         var likeButton = this;
         var formData = new FormData();
