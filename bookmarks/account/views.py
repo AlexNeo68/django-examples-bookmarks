@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
@@ -75,3 +76,20 @@ def edit(request:HttpRequest):
     }
     return render(request, 'account/edit.html', data)
 
+@login_required
+def user_list(request: HttpRequest):
+    users = User.objects.filter(is_active=True)
+    context = {
+        'section': 'peoples',
+        'users': users
+    }
+    return render(request, 'account/user/list.html', context)
+
+@login_required
+def user_detail(request: HttpRequest, username):
+    user = get_object_or_404(User, username=username, is_active=True)
+    context = {
+        'section': 'peoples',
+        'user': user
+    }
+    return render(request, 'account/user/detail.html', context)

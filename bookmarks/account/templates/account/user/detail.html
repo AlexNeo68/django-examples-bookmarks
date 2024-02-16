@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} Log-in {% endblock title %}
+{% block content %}
+
+<h1>Login</h1>
+<p>
+    Please, use the following form to log-in.
+    If you dont have an account <a href="{% url "register" %}">register here</a>.
+</p>
+<form method="POST">
+    {{form.as_p}}
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Log in">
+    </p>
+</form>
+
+<ul>
+    <li class="google">
+        <a href="{% url "social:begin" "google-oauth2" %}">
+            Sign in with Google
+        </a>
+    </li>
+</ul>
+
+{% endblock content %}
