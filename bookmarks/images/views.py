@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.http import HttpRequest, JsonResponse
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -48,3 +49,32 @@ def image_like(request: HttpRequest):
             return JsonResponse({'status': 'error'})
     else:
         return JsonResponse({'status': 'error'})
+
+
+@login_required
+def image_list(request):
+    images = Image.objects.all()
+    paginator = Paginator(images, 4)
+    page = request.GET.get('page')
+    images_only = request.GET.get('images_only')
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        images = paginator.page(1)
+    except EmptyPage:
+        if images_only:
+            # If AJAX request and page out of range
+            # return an empty page
+            return HttpResponse('')
+        # If page out of range return last page of results
+        images = paginator.page(paginator.num_pages)
+    if images_only:
+        return render(request,
+                      'images/image/list_images.html',
+                      {'section': 'images',
+                       'images': images})
+    return render(request,
+                  'images/image/list.html',
+                   {'section': 'images',
+                    'images': images})
