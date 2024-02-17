@@ -170,6 +170,8 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
 }
 
+# THUMBNAIL_DEBUG = True
+
 if DEBUG:
     import mimetypes
     mimetypes.add_type('application/javascript', '.js', True)
